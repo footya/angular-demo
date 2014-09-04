@@ -1,0 +1,59 @@
+<!doctype html>
+<html ng-app="App">
+
+<head>
+    <meta charset="utf-8" />
+    <title>AngularJS Services Demo</title>
+    <script src="bower_components/angularjs/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-controller="showCtrl" ng-init="get()">
+        <p>我们现在有多少钱？{{themoney |currency}}</p> <a href="#" ng-click="get()">刷新</a>
+    </div>
+    <div ng-controller="playCtrl">
+        {{test}}
+        <a href="#" ng-click="play()">花钱</a>
+    </div>
+    <div ng-controller="workCtrl">
+    {{test}}
+        <a href="#" ng-click="work()">挣钱</a>
+    </div>
+</body>
+<script type="text/javascript">
+var app = angular.module('App', []);
+app.factory('myService', function ($log) {
+    var ourMoney = 1000000000000000;
+    return {
+        get:function() {
+           return ourMoney;
+        },
+        add:function(num) {
+            ourMoney += num;
+            return ourMoney;
+            console.log(ourMoney);
+        },
+        cut:function(num) {
+            ourMoney -= num;
+            return ourMoney;
+            console.log(ourMoney);
+        }
+    }
+});
+app.controller('showCtrl', function ($scope, myService) {
+    $scope.get = function() {
+       $scope.themoney = myService.get();
+    }
+});
+app.controller('playCtrl', function ($scope, myService) {
+    $scope.play = function(){
+        $scope.themoney = myService.cut(10000);
+    }
+});
+app.controller('workCtrl', function ($scope, myService) {
+    $scope.work = function(){
+        $scope.themoney = myService.add(9999);
+    }
+});
+</script>
+</html>

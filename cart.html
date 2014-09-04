@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app="App">
+
+<head>
+    <script src="bower_components/angularjs/angular.min.js"></script>
+    <style type="text/css">
+    .form_item{ margin-bottom: 20px; line-height: 22px; zoom:1;}
+    .form_item:after{display:block; height:0; content:'.'; visibility:hidden; clear:both;}
+    .form_item .form_label{ width: 90px; height: 22px; float: left; text-align: right; margin-right: 10px;}
+    .form_item .form_label span{ color: #c82727}
+    .form_item .form_value{float: left}
+    .form_item .form_value label{ margin-right: 10px;}
+    .form_item input[type="text"]{height: 26px;line-height: 26px; border:1px solid #d9d9d9; padding: 0}
+    .form_item select{height: 28px;line-height: 28px;}
+    .form_item .form_ipt_w0{ width: 40px;}
+    .form_item select.form_ipt_w0{ width: 40px;}
+    .form_item .form_ipt_w1{ width: 50px;}
+    .form_item select.form_ipt_w1{width: 50px;}
+    .form_item .form_ipt_w2{ width: 500px; }
+    .form_item select.form_ipt_w2{width: 582px;}
+    .form_item .form_tare{height: 120px;border-color: #d9d9d9; padding: 0;border: 1px solid #D9D9D9;}
+    .form_item .form_value .form_error{ border: 1px solid #c82727}
+    .form_item .form_value .ui-btn:first-child{margin-left:0;}
+    .form_item .form_error_tip{ color:#c82727; display: none; line-height: 22px; text-indent: 110px; clear: both;}
+    </style>
+</head>
+
+<body ng-controller="CartController">
+    <h2>购物清单</h2><a href="#" ng-click="showlist = showlist ? 0 : 1" ng-init="showlist=1" >切换</a>
+    <div ng-show="showlist">
+        <div class="form_item" ng-repeat="item in items">
+            <div class="form_label">{{item.title}}:</div>
+            <div class="form_value">数量：<input type="text" class="form_ipt_w1" ng-model="item.number" /> 单价：{{item.price |currency}} 总价：{{ item.price * item.number |currency}} <a href="#" ng-click="remove($index)">删除</a></div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    angular.module('App', [])
+    .controller("CartController",function($scope) {
+        $scope.items = [
+            {title:"苹果",number:10,price:3.96},
+            {title:"香蕉",number:4,price:1.96},
+            {title:"西瓜",number:1,price:0.99}
+        ];
+        $scope.remove = function(index) {
+            $scope.items.splice(index,1);
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <script src="bower_components/angularjs/angular.min.js"></script>
+  </head>
+  <body>
+    <div ng-controller="Ctrl">
+      <weibo></weibo>
+      <div weibo></div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    angular.module('myApp', [])
+      .controller('Ctrl', function($scope) {
+        $scope.user = {
+          name: '姚晨',
+          userPic: 'http://tp2.sinaimg.cn/1266321801/180/5650856450/0'
+        };
+      })
+      .directive('weibo', function() {
+        return {
+          restrict:'EA',
+          template: '<div class="user-weibo"><img src="{{user.userPic}}" /><p>{{user.name}}</p></div>',
+          replace:true
+        };
+      });
+  </script>
+</html>

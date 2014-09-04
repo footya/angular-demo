@@ -1,0 +1,27 @@
+<!doctype html>
+<html ng-app="app">
+    <head>
+        <title>filter</title>
+        <script src="bower_components/angularjs/angular.min.js"></script>
+    </head>
+    <body ng-controller="Ctrl">
+        {{user.name | limitTo:5}}
+        <p>单价: <input type="text" ng-model="thenumber" placeholder="World"></p>
+        <p>两位小数:{{thenumber |number:2}}</p>
+        <p>折后:{{thenumber |myfilter:0.5|number:2}}</p>
+
+    </body>
+    <script type="text/javascript">
+        angular.module('app', [])
+        .controller('Ctrl', function($scope){
+            $scope.user = {
+              name: '我的名字好长好长'
+            };
+        })
+        .filter('myfilter', function() {
+          return function(input,a1) {
+            return parseInt(input) * a1;
+          };
+        });
+    </script>
+</html>

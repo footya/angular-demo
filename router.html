@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <script src="bower_components/angularjs/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <!--<script type="text/javascript" src="js/router.js"></script>-->  
+  </head>
+  <body>
+    <ul ng-controller="Ctrl">
+        <li ng-repeat="id in list">
+            <a href="#/list/{{id}}"> page {{id}}</a>
+        </li>
+    </ul>
+    <div ng-view></div>
+  </body>
+  <script type="text/javascript">
+    angular.module('app', ['ngRoute'])
+    .config(function($routeProvider) {
+        $routeProvider
+            .when('/list', {
+                templateUrl: 'views/list.html',
+                controller: 'RouteListCtl'
+            })
+            .when('/list/:id', {
+                templateUrl: 'views/item.html',
+                controller: 'RouteDetailCtl'
+            })
+            .otherwise({
+                redirectTo: '/list'
+            });
+    })
+    .controller('Ctrl', function($scope) {
+        $scope.list = [1, 2, 3]
+    })
+    .controller('RouteDetailCtl', function($scope, $routeParams) {
+        $scope.id = $routeParams.id;
+    });
+  </script>
+</html>
